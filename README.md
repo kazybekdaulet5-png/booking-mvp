@@ -1,96 +1,40 @@
-# Booking MVP — онлайн-бронирование для сферы услуг
+<p align="center">
+  <a href="https://tailwindcss.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg">
+      <img alt="Tailwind CSS" src="https://raw.githubusercontent.com/tailwindlabs/tailwindcss/HEAD/.github/logo-light.svg" width="350" height="70" style="max-width: 100%;">
+    </picture>
+  </a>
+</p>
 
-MVP системы бронирования для PS-клубов, барбершопов, бильярдных.
-Backend на FastAPI + SQLite, фронтенд на React (Vite) + Tailwind CSS,
-готов к встраиванию как Telegram WebApp.
+<p align="center">
+  A utility-first CSS framework for rapidly building custom user interfaces.
+</p>
 
-## Структура проекта
+<p align="center">
+    <a href="https://github.com/tailwindlabs/tailwindcss/actions"><img src="https://img.shields.io/github/actions/workflow/status/tailwindlabs/tailwindcss/ci.yml?branch=main" alt="Build Status"></a>
+    <a href="https://www.npmjs.com/package/tailwindcss"><img src="https://img.shields.io/npm/dt/tailwindcss.svg" alt="Total Downloads"></a>
+    <a href="https://github.com/tailwindcss/tailwindcss/releases"><img src="https://img.shields.io/npm/v/tailwindcss.svg" alt="Latest Release"></a>
+    <a href="https://github.com/tailwindcss/tailwindcss/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/tailwindcss.svg" alt="License"></a>
+</p>
 
-```
-booking-mvp/
-├── backend/
-│   ├── requirements.txt
-│   └── app/
-│       ├── main.py           # точка входа FastAPI
-│       ├── database.py       # подключение к SQLite
-│       ├── models.py         # SQLAlchemy-модели Resource, Booking
-│       ├── schemas.py        # Pydantic-схемы + валидация
-│       ├── crud.py           # логика работы с БД, проверка пересечений
-│       ├── seed.py           # демо-данные при первом запуске
-│       └── routers/
-│           ├── resources.py
-│           └── bookings.py
-└── frontend/
-    ├── index.html            # подключает Telegram WebApp SDK
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    ├── postcss.config.js
-    └── src/
-        ├── main.jsx
-        ├── App.jsx           # переключатель Клиент / Админ-панель
-        ├── api.js            # обёртка над fetch
-        ├── index.css
-        └── components/
-            ├── ClientView.jsx   # вид для клиента (Telegram WebApp)
-            └── AdminView.jsx    # админ-панель владельца
-```
+---
 
-## Backend — запуск
+## Documentation
 
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
+For full documentation, visit [tailwindcss.com](https://tailwindcss.com/).
 
-При первом запуске автоматически создастся `booking.db` (SQLite) и засеются
-демо-ресурсы: 3× PS5, 2× бильярдный стол, 2× барбера.
+## Community
 
-- API будет доступно на `http://localhost:8000`
-- Интерактивная документация (Swagger): `http://localhost:8000/docs`
+For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-### Эндпоинты
+[Discuss Tailwind CSS on GitHub](https://github.com/tailwindcss/tailwindcss/discussions)
 
-| Метод | Путь | Описание |
-|---|---|---|
-| GET | `/api/resources` | список всех ресурсов |
-| GET | `/api/bookings?date=YYYY-MM-DD` | брони на дату |
-| POST | `/api/bookings` | создать бронь (проверяет наложение времени) |
-| PATCH | `/api/bookings/{id}/status` | изменить статус брони |
+For casual chit-chat with others using the framework:
 
-## Frontend — запуск
+[Join the Tailwind CSS Discord Server](https://discord.gg/7NF8GNe)
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## Contributing
 
-- Приложение будет доступно на `http://localhost:5173`
-- Адрес backend задаётся в `frontend/.env` (`VITE_API_URL`)
-
-Открой `http://localhost:5173` в браузере — сверху переключатель
-«Клиент» / «Админ-панель».
-
-## Telegram WebApp интеграция
-
-1. Задеплой frontend (например, на Vercel/Netlify) — получишь публичный HTTPS-адрес.
-2. В [@BotFather](https://t.me/BotFather) создай бота и через `/newapp` или `/setmenubutton`
-   укажи этот адрес как Web App URL.
-3. `index.html` уже подключает `telegram-web-app.js`, а `main.jsx` вызывает
-   `Telegram.WebApp.ready()` и `expand()` при запуске.
-4. Имя клиента в `ClientView.jsx` автоматически подставляется из
-   `Telegram.WebApp.initDataUnsafe.user`, если приложение открыто внутри Telegram.
-
-Для продакшена backend тоже нужно задеплоить (например, на Railway/Render) и
-обновить `VITE_API_URL` на его публичный адрес.
-
-## Что дальше (не входит в MVP, но логичные следующие шаги)
-
-- Аутентификация в админ-панели (сейчас она открыта без пароля)
-- Уведомления в Telegram при новой брони / смене статуса (через Bot API)
-- Переход с SQLite на PostgreSQL при росте нагрузки
-- Возможность добавлять/редактировать ресурсы через UI (сейчас — только через seed.py)
+If you're interested in contributing to Tailwind CSS, please read our [contributing docs](https://github.com/tailwindcss/tailwindcss/blob/main/.github/CONTRIBUTING.md) **before submitting a pull request**.
